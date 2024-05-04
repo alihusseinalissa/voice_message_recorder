@@ -3,6 +3,8 @@ library voice_message_recorder;
 import 'package:flutter/material.dart';
 import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
 
+import '../mySize.dart';
+
 /// Used this class to show counter and mic Icon
 class ShowCounter extends StatelessWidget {
   final SoundRecordNotifier soundRecorderState;
@@ -27,12 +29,12 @@ class ShowCounter extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.4,
         color: counterBackGroundColor ?? Colors.grey.shade100,
         child: Padding(
-          padding: const EdgeInsets.only(top: 6),
+          padding: Spacing.only(top: MM.x6),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(width: 30),
+              SizedBox(width: MM.x30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +44,7 @@ class ShowCounter extends StatelessWidget {
                     style: counterTextStyle ??
                         const TextStyle(color: Colors.black),
                   ),
-                  const SizedBox(width: 3),
+                  SizedBox(width: MM.x3),
                   const Text(" : "),
                   Text(
                     soundRecorderState.minute.toString().padLeft(2, '0'),
@@ -51,7 +53,7 @@ class ShowCounter extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 3),
+              SizedBox(width: MM.x3),
               AnimatedOpacity(
                 duration: const Duration(seconds: 1),
                 opacity: soundRecorderState.second % 2 == 0 ? 1 : 0,
@@ -60,7 +62,7 @@ class ShowCounter extends StatelessWidget {
                   color: Colors.red,
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: MM.x10),
             ],
           ),
         ),

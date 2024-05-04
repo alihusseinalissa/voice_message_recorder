@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voice_message_recorder/audio_encoder_type.dart';
+import 'package:voice_message_recorder/mySize.dart';
 import 'package:voice_message_recorder/screen/social_media_recorder.dart';
 
 void main() {
@@ -40,10 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 140, left: 4, right: 4),
+          padding: Spacing.only(top: 140, left: 4, right: 4),
           child: Align(
             alignment: Alignment.centerRight,
-            child: SocialMediaRecorder(
+            child: VoiceMessageRecorder(
               // maxRecordTimeInSecond: 5,
               startRecording: () {
                 // function called when start recording

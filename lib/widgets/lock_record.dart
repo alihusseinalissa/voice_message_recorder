@@ -3,6 +3,8 @@ library voice_message_recorder;
 import 'package:flutter/material.dart';
 import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
 
+import '../mySize.dart';
+
 /// This Class Represent Icons To swap top to lock recording
 class LockRecord extends StatefulWidget {
   /// Object From Provider Notifier
@@ -27,22 +29,23 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
     return AnimatedPadding(
       duration: const Duration(seconds: 1),
       padding:
-          EdgeInsets.all(widget.soundRecorderState.second % 2 == 0 ? 0 : 8),
+          Spacing.all(widget.soundRecorderState.second % 2 == 0 ? 0 : MM.x8),
       child: Transform.translate(
         offset: const Offset(0, -70),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(MM.x12),
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeIn,
             opacity: widget.soundRecorderState.edge >= 50 ? 0 : 1,
             child: Container(
-              height: 50 - widget.soundRecorderState.heightPosition < 0
+              height: MM.x50 - widget.soundRecorderState.heightPosition < 0
                   ? 0
-                  : 50 - widget.soundRecorderState.heightPosition,
+                  : MM.x50 - widget.soundRecorderState.heightPosition,
               color: Colors.grey.shade100,
+              decoration: const BoxDecoration(shape: BoxShape.circle),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: Spacing.all(MM.x8),
                 child: widget.lockIcon ??
                     Stack(
                       children: [

@@ -11,8 +11,9 @@ import 'package:voice_message_recorder/widgets/show_mic_with_text.dart';
 import 'package:voice_message_recorder/widgets/sound_recorder_when_locked_design.dart';
 
 import '../audio_encoder_type.dart';
+import '../mySize.dart';
 
-class SocialMediaRecorder extends StatefulWidget {
+class VoiceMessageRecorder extends StatefulWidget {
   /// use it for change back ground of cancel
   final Color? cancelTextBackGroundColor;
 
@@ -35,7 +36,7 @@ class SocialMediaRecorder extends StatefulWidget {
   final Color? recordIconBackGroundColor;
 
   /// use to change the Icon backGround color when user locked the record
-  final Color? recordIconWhenLockBackGroundColor;
+  final Color? sendButtonBackgroundColor;
 
   /// use to change all recording widget color
   final Color? backGroundColor;
@@ -84,7 +85,7 @@ class SocialMediaRecorder extends StatefulWidget {
   final double initRecordPackageWidth;
 
   // ignore: sort_constructors_first
-  const SocialMediaRecorder({
+  const VoiceMessageRecorder({
     this.sendButtonIcon,
     this.initRecordPackageWidth = 40,
     this.fullRecordPackageHeight = 50,
@@ -98,7 +99,7 @@ class SocialMediaRecorder extends StatefulWidget {
     this.counterBackGroundColor,
     this.recordIconWhenLockedRecord,
     this.recordIconBackGroundColor = Colors.blue,
-    this.recordIconWhenLockBackGroundColor = Colors.blue,
+    this.sendButtonBackgroundColor = Colors.blue,
     this.backGroundColor,
     this.cancelTextStyle,
     this.counterTextStyle,
@@ -115,7 +116,7 @@ class SocialMediaRecorder extends StatefulWidget {
   _SocialMediaRecorder createState() => _SocialMediaRecorder();
 }
 
-class _SocialMediaRecorder extends State<SocialMediaRecorder> {
+class _SocialMediaRecorder extends State<VoiceMessageRecorder> {
   late SoundRecordNotifier soundRecordNotifier;
 
   @override
@@ -191,8 +192,8 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
         cancelTextBackGroundColor: widget.cancelTextBackGroundColor,
         cancelTextStyle: widget.cancelTextStyle,
         counterBackGroundColor: widget.counterBackGroundColor,
-        recordIconWhenLockBackGroundColor:
-            widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
+        sendButtonBackgroundColor:
+            widget.sendButtonBackgroundColor ?? Colors.blue,
         counterTextStyle: widget.counterTextStyle,
         recordIconWhenLockedRecord: widget.recordIconWhenLockedRecord,
         sendRequestFunction: widget.sendRequestFunction,
@@ -224,11 +225,11 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
           children: [
             Center(
               child: Padding(
-                padding: EdgeInsets.only(right: state.edge),
+                padding: Spacing.only(right: state.edge),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: soundRecordNotifier.isShow
-                        ? BorderRadius.circular(12)
+                        ? BorderRadius.circular(MM.x12)
                         : widget.radius != null && !soundRecordNotifier.isShow
                             ? widget.radius
                             : BorderRadius.circular(0),
@@ -265,7 +266,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
               ),
             ),
             SizedBox(
-              width: 60,
+              width: MM.x60,
               child: LockRecord(
                 soundRecorderState: state,
                 lockIcon: widget.lockButton,

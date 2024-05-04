@@ -4,6 +4,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
 
+import '../mySize.dart';
+
 /// used to show mic and show dragg text when
 /// press into record icon
 class ShowMicWithText extends StatelessWidget {
@@ -35,8 +37,8 @@ class ShowMicWithText extends StatelessWidget {
     Colors.grey.shade200,
     Colors.black,
   ];
-  final colorizeTextStyle = const TextStyle(
-    fontSize: 14.0,
+  final colorizeTextStyle = TextStyle(
+    fontSize: MM.x14,
     fontFamily: 'Horizon',
   );
   @override
@@ -54,7 +56,7 @@ class ShowMicWithText extends StatelessWidget {
               key: soundRecorderState.key,
               scale: soundRecorderState.buttonPressed ? 1.3 : 1,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(600),
+                borderRadius: BorderRadius.circular(MM.x600),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeIn,
@@ -68,7 +70,7 @@ class ShowMicWithText extends StatelessWidget {
                             Theme.of(context).colorScheme.secondary
                         : Colors.transparent,
                     child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: Spacing.all(MM.x4),
                       child: recordIcon ??
                           Icon(
                             Icons.mic,
@@ -87,12 +89,12 @@ class ShowMicWithText extends StatelessWidget {
         if (shouldShowText)
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8),
+              padding: Spacing.only(left: MM.x8, right: MM.x8),
               child: DefaultTextStyle(
                 overflow: TextOverflow.clip,
                 maxLines: 1,
-                style: const TextStyle(
-                  fontSize: 14.0,
+                style: TextStyle(
+                  fontSize: MM.x15,
                 ),
                 child: AnimatedTextKit(
                   animatedTexts: [
