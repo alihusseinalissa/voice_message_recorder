@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voice_message_recorder/audio_encoder_type.dart';
 import 'package:voice_message_recorder/mySize.dart';
-import 'package:voice_message_recorder/screen/social_media_recorder.dart';
+import 'package:voice_message_recorder/screen/voice_message_recorder.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
