@@ -16,7 +16,7 @@
 
 <div style="height:12px;"></div>
 <p style="font-size: 18px" >
-Voicey is a flutter package to play voice messages in chats. Also, you can sicking by dragging on voice noises.
+voice message recorder is a flutter package you can record audio on single hold and also lock recorder to record
 </p>
 <div style="height:40px;"></div>
 
