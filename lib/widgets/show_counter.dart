@@ -15,10 +15,10 @@ class ShowCounter extends StatelessWidget {
   const ShowCounter({
     required this.soundRecorderState,
     required this.fullRecordPackageHeight,
-    Key? key,
+    super.key,
     this.counterTextStyle,
     required this.counterBackGroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

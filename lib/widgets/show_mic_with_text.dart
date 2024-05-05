@@ -24,14 +24,14 @@ class ShowMicWithText extends StatelessWidget {
     required this.recordButtonBackGroundColor,
     required this.initRecordPackageWidth,
     required this.fullRecordPackageHeight,
-    Key? key,
+    super.key,
     required this.shouldShowText,
     required this.soundRecorderState,
     required this.slideToCancelTextStyle,
     required this.slideToCancelText,
     required this.recordIcon,
     required this.counterBackGroundColor,
-  }) : super(key: key);
+  });
   final colorizeColors = [
     Colors.black,
     Colors.grey.shade200,

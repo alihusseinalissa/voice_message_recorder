@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:voice_message_recorder/audio_encoder_type.dart';
 import 'package:voice_message_recorder/mySize.dart';
@@ -53,7 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     // function called when stop recording, return the recording time
                   },
                   sendRequestFunction: (soundFile, _time) {
-                    //  print("the current path is ${soundFile.path}");
+                    if (kDebugMode) {
+                      print("@@@@@@@current path is ${soundFile.path}");
+                    }
                   },
                   encode: AudioEncoderType.AAC,
                 ),

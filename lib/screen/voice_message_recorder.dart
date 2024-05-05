@@ -103,7 +103,7 @@ class VoiceMessageRecorder extends StatefulWidget {
     this.recordIconBackGroundColor = const Color(0xff01a801),
     this.sendButtonBackgroundColor = const Color(0xff01a801),
     this.backGroundColor = const Color(0xfff5f4f4),
-    this.backGroundBoarderColor = const Color(0xff797979),
+    this.backGroundBoarderColor = const Color(0xffd5d4d4),
     this.cancelTextStyle,
     this.timerTextStyle,
     this.slideToCancelTextStyle,
