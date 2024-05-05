@@ -142,6 +142,7 @@ class _SocialMediaRecorder extends State<VoiceMessageRecorder> {
 
   @override
   Widget build(BuildContext context) {
+    MM().init(context);
     soundRecordNotifier.maxRecordTime = widget.maxRecordTimeInSecond;
     soundRecordNotifier.startRecording = widget.startRecording ?? () {};
     soundRecordNotifier.stopRecording = widget.stopRecording ?? (String x) {};
