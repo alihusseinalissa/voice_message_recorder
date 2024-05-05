@@ -25,9 +25,11 @@ class ShowCounter extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
+        decoration: BoxDecoration(
+            color: counterBackGroundColor ?? const Color(0xfff5f4f4),
+            borderRadius: BorderRadius.all(Radius.circular(MM.x30))),
         height: fullRecordPackageHeight,
         width: MediaQuery.of(context).size.width * 0.4,
-        color: counterBackGroundColor ?? Colors.grey.shade100,
         child: Padding(
           padding: Spacing.only(top: MM.x6),
           child: Row(

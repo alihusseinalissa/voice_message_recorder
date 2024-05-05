@@ -29,51 +29,65 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
     return AnimatedPadding(
       duration: const Duration(seconds: 1),
       padding:
-          Spacing.all(widget.soundRecorderState.second % 2 == 0 ? 0 : MM.x8),
+          Spacing.all(widget.soundRecorderState.second % 2 == 0 ? 0 : MM.x0),
       child: Transform.translate(
         offset: const Offset(0, -70),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(MM.x12),
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeIn,
-            opacity: widget.soundRecorderState.edge >= 50 ? 0 : 1,
-            child: Container(
-              height: MM.x50 - widget.soundRecorderState.heightPosition < 0
-                  ? 0
-                  : MM.x50 - widget.soundRecorderState.heightPosition,
-              color: Colors.grey.shade100,
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Padding(
-                padding: Spacing.all(MM.x8),
-                child: widget.lockIcon ??
-                    Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeIn,
-                              opacity: widget.soundRecorderState.second % 2 != 0
-                                  ? 0
-                                  : 1,
-                              child: const Icon(Icons.lock_outline_rounded)),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(MM.x12),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeIn,
+                opacity: widget.soundRecorderState.edge >= 50 ? 0 : 1,
+                child: Container(
+                  height: MM.x50 - widget.soundRecorderState.heightPosition < 0
+                      ? 0
+                      : MM.x50 - widget.soundRecorderState.heightPosition,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey.shade300,
+                  ),
+                  child: Padding(
+                    padding: Spacing.all(MM.x8),
+                    child: widget.lockIcon ??
+                        Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeIn,
+                                  opacity:
+                                      widget.soundRecorderState.second % 2 != 0
+                                          ? 0
+                                          : 1,
+                                  child: const Icon(
+                                    Icons.lock_outline_rounded,
+                                    color: Colors.red,
+                                  )),
+                            ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeIn,
+                                  opacity:
+                                      widget.soundRecorderState.second % 2 == 0
+                                          ? 0
+                                          : 1,
+                                  child: const Icon(
+                                    Icons.lock_open_rounded,
+                                    color: Colors.red,
+                                  )),
+                            ),
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeIn,
-                              opacity: widget.soundRecorderState.second % 2 == 0
-                                  ? 0
-                                  : 1,
-                              child: const Icon(Icons.lock_open_rounded)),
-                        ),
-                      ],
-                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

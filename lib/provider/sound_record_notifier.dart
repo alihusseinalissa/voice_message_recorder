@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:voice_message_recorder/audio_encoder_type.dart';
-// import 'package:uuid/uuid.dart';
 
 class SoundRecordNotifier extends ChangeNotifier {
   int _localCounterForMaxRecordTime = 0;
@@ -110,6 +111,7 @@ class SoundRecordNotifier extends ChangeNotifier {
         sendRequestFunction(File.fromUri(Uri(path: path)), _time);
         stopRecording!(_time);
       }
+      playSound('packages/voice_message_recorder/assets/sounds/delete.mp3');
     }
     resetEdgePadding();
   }
@@ -264,6 +266,7 @@ class SoundRecordNotifier extends ChangeNotifier {
       });
 
       if (startRecord != null) {
+        playSound('packages/voice_message_recorder/assets/sounds/record.mp3');
         startRecord();
       }
 
@@ -271,6 +274,13 @@ class SoundRecordNotifier extends ChangeNotifier {
       notifyListeners();
     }
     notifyListeners();
+  }
+
+  AudioPlayer audioPlayer = AudioPlayer();
+  final player = AudioPlayer();
+  Future<void> playSound(String path) async {
+    final bytes = await rootBundle.load(path);
+    await audioPlayer.play(BytesSource(bytes.buffer.asUint8List()));
   }
 
   /// to check permission

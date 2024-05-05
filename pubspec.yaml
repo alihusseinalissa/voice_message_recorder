@@ -5,7 +5,7 @@ homepage:
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
-  flutter: '>=3.3.0'
+  flutter: '>=3.1.0'
 
 dependencies:
   flutter:
@@ -20,6 +20,7 @@ dependencies:
   path_provider: ^2.1.1
   provider: ^6.1.1
   record: ^4.4.4
+  audioplayers:
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +60,6 @@ flutter:
         fileName: voice_message_recorder_web.dart
 
   assets:
-    - assets/images/
     - assets/
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

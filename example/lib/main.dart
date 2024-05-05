@@ -13,12 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MM().init(context);
     return MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: const MyHomePage(),
     );
   }
@@ -40,24 +38,28 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Padding(
-          padding: Spacing.only(top: 140, left: 4, right: 4),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: VoiceMessageRecorder(
-              // maxRecordTimeInSecond: 5,
-              startRecording: () {
-                // function called when start recording
-              },
-              stopRecording: (_time) {
-                // function called when stop recording, return the recording time
-              },
-              sendRequestFunction: (soundFile, _time) {
-                //  print("the current path is ${soundFile.path}");
-              },
-              encode: AudioEncoderType.AAC,
+        child: Column(
+          children: [
+            Padding(
+              padding: Spacing.only(top: 300, left: 4, right: 4),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: VoiceMessageRecorder(
+                  // maxRecordTimeInSecond: 5,
+                  startRecording: () {
+                    // function called when start recording
+                  },
+                  stopRecording: (_time) {
+                    // function called when stop recording, return the recording time
+                  },
+                  sendRequestFunction: (soundFile, _time) {
+                    //  print("the current path is ${soundFile.path}");
+                  },
+                  encode: AudioEncoderType.AAC,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -13,7 +13,7 @@ class ShowMicWithText extends StatelessWidget {
   final String? slideToCancelText;
   final SoundRecordNotifier soundRecorderState;
   final TextStyle? slideToCancelTextStyle;
-  final Color? backGroundColor;
+  final Color? recordButtonBackGroundColor;
   final Widget? recordIcon;
   final Color? counterBackGroundColor;
   final double fullRecordPackageHeight;
@@ -21,7 +21,7 @@ class ShowMicWithText extends StatelessWidget {
 
   // ignore: sort_constructors_first
   ShowMicWithText({
-    required this.backGroundColor,
+    required this.recordButtonBackGroundColor,
     required this.initRecordPackageWidth,
     required this.fullRecordPackageHeight,
     Key? key,
@@ -61,23 +61,20 @@ class ShowMicWithText extends StatelessWidget {
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeIn,
                   width: soundRecorderState.buttonPressed
-                      ? fullRecordPackageHeight
+                      ? fullRecordPackageHeight - 5
                       : initRecordPackageWidth - 5,
-                  height: fullRecordPackageHeight,
+                  height: fullRecordPackageHeight - 5,
                   child: Container(
-                    color: (soundRecorderState.buttonPressed)
-                        ? backGroundColor ??
-                            Theme.of(context).colorScheme.secondary
-                        : Colors.transparent,
+                    color: recordButtonBackGroundColor,
                     child: Padding(
-                      padding: Spacing.all(MM.x4),
+                      padding: Spacing.all(MM.x2),
                       child: recordIcon ??
                           Icon(
-                            Icons.mic,
-                            size: 28,
+                            Icons.mic_none,
+                            size: MM.x28,
                             color: (soundRecorderState.buttonPressed)
-                                ? Colors.grey.shade200
-                                : Colors.black,
+                                ? Colors.white70
+                                : Colors.white,
                           ),
                     ),
                   ),
