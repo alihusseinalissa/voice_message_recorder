@@ -25,6 +25,7 @@ class VoiceMessageRecorder extends StatefulWidget {
 
   /// function called when stop recording, return the recording time (even if time < 1)
   final Function(String time)? stopRecording;
+  final Function(bool) recorderStatus;
 
   /// recording Icon That pressesd to start record
   final Widget? recordIcon;
@@ -87,35 +88,36 @@ class VoiceMessageRecorder extends StatefulWidget {
   final double initRecordPackageWidth;
   final double? horizontalPadding;
   // ignore: sort_constructors_first
-  const VoiceMessageRecorder({
-    this.sendButtonIcon,
-    this.initRecordPackageWidth = 50,
-    this.fullRecordPackageHeight = 50,
-    this.maxRecordTimeInSecond,
-    this.storeSoundRecoringPath = "",
-    required this.sendRequestFunction,
-    this.startRecording,
-    this.stopRecording,
-    this.recordIcon,
-    this.lockButton,
-    this.timerBackgroundColor,
-    this.recordIconWhenLockedRecord,
-    this.recordIconBackGroundColor = const Color(0xff01a801),
-    this.sendButtonBackgroundColor = const Color(0xff01a801),
-    this.backGroundColor = const Color(0xfff5f4f4),
-    this.backGroundBoarderColor = const Color(0xffd5d4d4),
-    this.cancelTextStyle,
-    this.timerTextStyle,
-    this.slideToCancelTextStyle,
-    this.slideToCancelText = " Slide to Cancel >",
-    this.cancelText = "Cancel",
-    this.encode = AudioEncoderType.AAC,
-    this.cancelTextBackGroundColor,
-    this.radius,
-    Key? key,
-    this.boarderRadius = 30,
-    this.horizontalPadding = 5,
-  }) : super(key: key);
+  const VoiceMessageRecorder(
+      {this.sendButtonIcon,
+      this.initRecordPackageWidth = 50,
+      this.fullRecordPackageHeight = 50,
+      this.maxRecordTimeInSecond,
+      this.storeSoundRecoringPath = "",
+      required this.sendRequestFunction,
+      this.startRecording,
+      this.stopRecording,
+      this.recordIcon,
+      this.lockButton,
+      this.timerBackgroundColor,
+      this.recordIconWhenLockedRecord,
+      this.recordIconBackGroundColor = const Color(0xff01a801),
+      this.sendButtonBackgroundColor = const Color(0xff01a801),
+      this.backGroundColor = const Color(0xfff5f4f4),
+      this.backGroundBoarderColor = const Color(0xffd5d4d4),
+      this.cancelTextStyle,
+      this.timerTextStyle,
+      this.slideToCancelTextStyle,
+      this.slideToCancelText = " Slide to Cancel >",
+      this.cancelText = "Cancel",
+      this.encode = AudioEncoderType.AAC,
+      this.cancelTextBackGroundColor,
+      this.radius,
+      Key? key,
+      this.boarderRadius = 30,
+      this.horizontalPadding = 5,
+      required this.recorderStatus})
+      : super(key: key);
 
   @override
   _SocialMediaRecorder createState() => _SocialMediaRecorder();
@@ -168,6 +170,15 @@ class _SocialMediaRecorder extends State<VoiceMessageRecorder> {
   }
 
   Widget makeBody(SoundRecordNotifier state) {
+    if (soundRecordNotifier.buttonPressed == false &&
+        soundRecordNotifier.isLocked == false &&
+        soundRecordNotifier.isShow == false &&
+        soundRecordNotifier.lockScreenRecord == false) {
+      widget.recorderStatus(true);
+    } else {
+      widget.recorderStatus(false);
+    }
+
     return Column(
       children: [
         GestureDetector(
@@ -229,7 +240,7 @@ class _SocialMediaRecorder extends State<VoiceMessageRecorder> {
         duration: Duration(milliseconds: soundRecordNotifier.isShow ? 0 : 300),
         height: widget.fullRecordPackageHeight,
         width: (soundRecordNotifier.isShow)
-            ? MediaQuery.of(context).size.width
+            ? MediaQuery.of(context).size.width * 0.8
             : widget.initRecordPackageWidth,
         child: Stack(
           children: [

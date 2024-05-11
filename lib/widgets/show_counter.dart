@@ -28,7 +28,7 @@ class ShowCounter extends StatelessWidget {
         decoration: BoxDecoration(
             color: counterBackGroundColor ?? const Color(0xfff5f4f4),
             borderRadius: BorderRadius.all(Radius.circular(MM.x30))),
-        height: fullRecordPackageHeight,
+        height: fullRecordPackageHeight * 0.9,
         width: MediaQuery.of(context).size.width * 0.4,
         child: Padding(
           padding: Spacing.only(top: MM.x6),
