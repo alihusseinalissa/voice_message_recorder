@@ -3,8 +3,6 @@ import 'package:voice_message_recorder/audio_encoder_type.dart';
 import 'package:voice_message_recorder/mySize.dart';
 import 'package:voice_message_recorder/screen/voice_message_recorder.dart';
 
-import 'myColors.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -24,6 +22,65 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class ParentWidget extends StatefulWidget {
+  @override
+  _ParentWidgetState createState() => _ParentWidgetState();
+}
+
+class _ParentWidgetState extends State<ParentWidget> {
+  bool _isLoading = false;
+
+  void _handleData(String data) {
+    print("sdfsfsfsfsfsfsfsfsf#${data}");
+    setState(() {
+      _isLoading = true; // Show progress indicator
+    });
+
+    // Simulate data processing
+    Future.delayed(Duration(seconds: 2), () {
+      // After processing, hide progress indicator
+      setState(() {
+        _isLoading = false;
+      });
+      // Do something with the data
+      print("Received data from child: $data");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Parent Widget'),
+      ),
+      body: Center(
+        child: _isLoading
+            ? CircularProgressIndicator() // Show progress indicator
+            : ChildWidget(onDataReceived: _handleData),
+      ),
+    );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+  final Function(String) onDataReceived;
+
+  ChildWidget({required this.onDataReceived});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // Simulate getting data
+        String data = "Some data";
+        // Pass data back to parent
+        onDataReceived(data);
+      },
+      child: Text('Send Data to Parent'),
+    );
+  }
+}
+
 class SingleChatScreen extends StatelessWidget {
   SingleChatScreen({
     Key? key,
@@ -34,9 +91,26 @@ class SingleChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          ChatInputField(),
+          VoiceMessageRecorder(
+            functionStartRecording: () {
+              // function called when start recording
+            },
+            functionStopRecording: (_time) {
+              // function called when stop recording, return the recording time
+            },
+            functionSendVoice: (soundFile, _time) {
+              //  print("the current path is ${soundFile.path}");
+            },
+            encode: AudioEncoderType.AAC,
+            functionRecorderStatus: (bool) {},
+            functionSendTextMessage: (String text) {},
+            functionDataCameraReceived: (String) {
+              print(
+                  "-VIDELCGVVDHCFCHGCDCHCDHCDHCDHCD    -$String-----------------------------------------------CAMERAA");
+            },
+          ),
         ],
       ),
     );
@@ -56,177 +130,6 @@ class SingleChatScreen extends StatelessWidget {
         ),
         SizedBox(width: MM.x20 / 2),
       ],
-    );
-  }
-}
-
-class ChatInputField extends StatefulWidget {
-  ChatInputField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<ChatInputField> createState() => _ChatInputFieldState();
-}
-
-class _ChatInputFieldState extends State<ChatInputField> {
-  TextEditingController message = TextEditingController();
-
-  bool swap = true;
-  bool switchTextVoice = true;
-  double containerHeight = MM.x60; // Initial height of the container
-  final FocusNode textInputFocus = FocusNode();
-  @override
-  Widget build(BuildContext context) {
-    print(
-        "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN         $switchTextVoice   dddddddddddddddddddddddddddddddddddddddd");
-
-    return Container(
-      // Use AnimatedContainer
-      // duration: Duration(milliseconds: 300), // Animation duration
-      height: containerHeight, // Set container height
-
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, 4),
-            blurRadius: 32,
-            color: const Color(0xFF087949).withOpacity(0.08),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: MM.x5,
-            ),
-            if (switchTextVoice)
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MM.x20 * 0.75,
-                  ),
-                  decoration: BoxDecoration(
-                    color: MK.white,
-                    border: Border.all(color: MK.grey),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.sentiment_satisfied_alt_outlined,
-                        color: MK.primary,
-                      ),
-                      SizedBox(width: MM.x10),
-                      Expanded(
-                        child: TextField(
-                          focusNode: textInputFocus,
-                          controller: message,
-                          onChanged: (val) {
-                            setState(() {
-                              if (message.text.isNotEmpty) {
-                                swap = false;
-                                containerHeight =
-                                    MM.x90; // Reset container height
-                              } else {
-                                swap = true;
-                                containerHeight =
-                                    MM.x60; // Increase container height
-                              }
-                            });
-                          },
-                          maxLines: 3, // Limit to 3 lines
-                          decoration: const InputDecoration(
-                            hintStyle: TextStyle(
-                              color: MK.primary,
-                            ),
-                            hintText: "Type message",
-                            labelStyle: TextStyle(
-                              color: MK.primary,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      const Icon(
-                        Icons.attach_file,
-                        color: MK.primary,
-                      ),
-                      SizedBox(width: MM.x10),
-                      Icon(
-                        Icons.camera_alt_outlined,
-                        color: MK.primary,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: swap
-                    ? VoiceMessageRecorder(
-                        startRecording: () {
-                          print("---------------------------------------");
-                          textInputFocus.unfocus();
-
-                          // function called when start recording
-                        },
-                        stopRecording: (_time) {
-                          // function called when stop recording, return the recording time
-                        },
-                        sendRequestFunction: (soundFile, _time) {
-                          //  print("the current path is ${soundFile.path}");
-                        },
-                        encode: AudioEncoderType.AAC,
-                        recorderStatus: (bool) {
-                          switchTextVoice = bool;
-
-                          print(
-                              "******mmm***************$switchTextVoice   $bool     ****************************************");
-                        },
-                      )
-                    : Padding(
-                        padding: Spacing.only(left: MM.x12, right: MM.x10),
-                        child: InkWell(
-                          onTap: () async {},
-                          child: Transform.scale(
-                            scale: 1.2,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(MM.x600),
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn,
-                                width: MM.x45,
-                                height: MM.x45,
-                                child: Container(
-                                  color: MK.primary,
-                                  child: Padding(
-                                    padding: Spacing.all(MM.x4),
-                                    child: Icon(
-                                      Icons.send,
-                                      textDirection: TextDirection.ltr,
-                                      size: MM.x26,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-            /* GFButton(
-              shape: GFButtonShape.standard,
-              type: GFButtonType.outline,
-              onPressed: () {},
-              icon: Icon(Icons.send),
-            )*/
-          ],
-        ),
-      ),
     );
   }
 }
