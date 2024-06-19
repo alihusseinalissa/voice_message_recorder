@@ -54,6 +54,7 @@ class VoiceMessageRecorder extends StatefulWidget {
   final Color? sendButtonBackgroundColor;
 
   /// use to change all recording widget color
+  final Color? textFieldBackGroundColor;
   final Color? backGroundColor;
 
   /// use to change the counter style
@@ -102,41 +103,42 @@ class VoiceMessageRecorder extends StatefulWidget {
   final double initRecordPackageWidth;
   final double? verticalPadding;
   // ignore: sort_constructors_first
-  const VoiceMessageRecorder(
-      {this.sendButtonIcon,
-      this.initRecordPackageWidth = 50,
-      this.fullRecordPackageHeight = 50,
-      this.maxRecordTimeInSecond,
-      this.storeSoundRecoringPath = "",
-      required this.functionSendVoice,
-      this.functionStartRecording,
-      this.functionStopRecording,
-      this.recordIcon,
-      this.lockButton,
-      this.timerBackgroundColor,
-      this.recordIconWhenLockedRecord,
-      this.recordIconBackGroundColor = const Color(0xFF128C7E),
-      this.sendButtonBackgroundColor = const Color(0xFF128C7E),
-      this.backGroundColor = const Color(0xffffffff),
-      this.backGroundBoarderColor = const Color(0xffffffff),
-      this.cancelTextStyle,
-      this.timerTextStyle,
-      this.slideToCancelTextStyle,
-      this.slideToCancelText = " Slide to Cancel >",
-      this.cancelText = "Cancel",
-      this.encode = AudioEncoderType.AAC,
-      this.cancelTextBackGroundColor = const Color(0xfffaefef),
-      this.radius,
-      Key? key,
-      this.boarderRadius = 30,
-      this.verticalPadding = 5,
-      required this.functionRecorderStatus,
-      this.functionCameraPicker,
-      this.functionFilePicker,
-      this.functionEmogiPicker,
-      required this.functionSendTextMessage,
-      required this.functionDataCameraReceived})
-      : super(key: key);
+  const VoiceMessageRecorder({
+    this.sendButtonIcon,
+    this.initRecordPackageWidth = 50,
+    this.fullRecordPackageHeight = 50,
+    this.maxRecordTimeInSecond,
+    this.storeSoundRecoringPath = "",
+    required this.functionSendVoice,
+    this.functionStartRecording,
+    this.functionStopRecording,
+    this.recordIcon,
+    this.lockButton,
+    this.timerBackgroundColor,
+    this.recordIconWhenLockedRecord,
+    this.recordIconBackGroundColor = const Color(0xFF128C7E),
+    this.sendButtonBackgroundColor = const Color(0xFF128C7E),
+    this.textFieldBackGroundColor = const Color(0xffffffff),
+    this.backGroundBoarderColor = const Color(0xffffffff),
+    this.backGroundColor = const Color(0xffd7d7d7),
+    this.cancelTextStyle,
+    this.timerTextStyle,
+    this.slideToCancelTextStyle,
+    this.slideToCancelText = " Slide to Cancel >",
+    this.cancelText = "Cancel",
+    this.encode = AudioEncoderType.AAC,
+    this.cancelTextBackGroundColor = const Color(0xfffaefef),
+    this.radius,
+    Key? key,
+    this.boarderRadius = 30,
+    this.verticalPadding = 5,
+    required this.functionRecorderStatus,
+    this.functionCameraPicker,
+    this.functionFilePicker,
+    this.functionEmogiPicker,
+    required this.functionSendTextMessage,
+    required this.functionDataCameraReceived,
+  }) : super(key: key);
 
   @override
   _VoiceMessageRecorder createState() => _VoiceMessageRecorder();
@@ -206,7 +208,8 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
       widget.functionRecorderStatus(false);
     }
 
-    return Padding(
+    return Container(
+      decoration: BoxDecoration(color: widget.backGroundColor),
       padding: Spacing.symmetric(vertical: widget.verticalPadding!),
       child: Column(
         children: [
@@ -250,8 +253,8 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.easeIn,
-                                  width: MM.x45,
-                                  height: MM.x45,
+                                  width: MM.x42,
+                                  height: MM.x42,
                                   child: Container(
                                     color: widget.sendButtonBackgroundColor,
                                     child: Padding(
@@ -272,24 +275,27 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
               if (!soundRecordNotifier.isShow)
                 Container(
                   width: MediaQuery.of(context).size.width * 0.85,
-                  height: message.text.length > 69
-                      ? MM.x110
-                      : message.text.length > 46
-                          ? MM.x100
-                          : message.text.length > 23
-                              ? MM.x80
-                              : widget.fullRecordPackageHeight,
+                  height: message.text.length > 90
+                      ? MM.x130
+                      : message.text.length > 69
+                          ? MM.x110
+                          : message.text.length > 48
+                              ? MM.x100
+                              : message.text.length > 23
+                                  ? MM.x80
+                                  : widget.fullRecordPackageHeight,
                   padding: EdgeInsets.symmetric(
-                    horizontal: MM.x20 * 0.75,
+                    horizontal: MM.x20 * 0.50,
                   ),
                   decoration: BoxDecoration(
-                    color: widget.backGroundColor,
+                    color: widget.textFieldBackGroundColor,
                     border: Border.all(color: const Color(0xFFEFEFEF)),
                     borderRadius: BorderRadius.circular(message.text.length > 23
                         ? MM.x18
                         : widget.boarderRadius!),
                   ),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -329,9 +335,12 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                               show = false;
                               setState(() {});
                             },
-                            maxLines: 3, // Limit to 3 lines
+                            maxLines: 4, // Limit to 3 lines
                             decoration: InputDecoration(
-                              hintStyle: TextStyle(
+                              contentPadding: EdgeInsets.only(
+                                  top: message.text.isEmpty ? MM.x12 : MM.x1,
+                                  bottom: MM.x1),
+                              hintStyle: const TextStyle(
                                 color: Colors.grey,
                               ),
                               hintText: "Type message ...",
@@ -344,7 +353,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                         ),
                       ),
                       SizedBox(
-                        width: MM.x5,
+                        width: MM.x3,
                       ),
                       GestureDetector(
                         child: Icon(
@@ -467,7 +476,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                             ? widget.radius
                             : BorderRadius.circular(0),
                     color: (soundRecordNotifier.isShow)
-                        ? widget.backGroundColor
+                        ? widget.textFieldBackGroundColor
                         : Colors.transparent,
                   ),
                   child: Stack(
