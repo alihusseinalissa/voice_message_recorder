@@ -6,6 +6,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
@@ -143,7 +144,8 @@ class VoiceMessageRecorder extends StatefulWidget {
 
 class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   late SoundRecordNotifier soundRecordNotifier;
-
+  final FlutterContactPicker _contactPicker = new FlutterContactPicker();
+  List<Contact>? _contacts;
   @override
   void initState() {
     soundRecordNotifier = SoundRecordNotifier(
@@ -382,6 +384,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   }
 
   void _openCamera() {
+    textInputFocus.unfocus();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -624,7 +627,14 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                       icons: Icons.person,
                       color: Colors.blue,
                       text: "Contact",
-                      onTap: () {}),
+                      onTap: () async {
+                        Contact? contact = await _contactPicker.selectContact();
+                        setState(() {
+                          _contacts = contact == null ? null : [contact];
+                          message.text =
+                              '${contact?.fullName ?? ''} (${contact?.phoneNumbers?.first ?? ''})';
+                        });
+                      }),
                 ],
               ),
             ],
@@ -635,62 +645,65 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   }
 
   Future<void> pickFile({required List<String> extension}) async {
-    print("ewrwqerwrwerwerwrewerrew");
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: extension,
-    );
-    final filePath = result?.files.single.path;
-    final fileExtension = filePath?.split('.').last.toLowerCase();
+    var status = await Permission.storage.request();
+    if (status.isGranted) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: extension,
+      );
 
-    print(
-        'File>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>. extension: $fileExtension');
-    if (result != null) {
-      if (result.files.single.path!.split('.').last.toLowerCase() == 'jpg' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'jpeg' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'png' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'gif' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'bmp') {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CameraViewPage(
-                IconBackGroundColor: widget.recordIconBackGroundColor!,
-                path: result.files.single.path!,
-                onDataCameraReceived: widget.functionDataCameraReceived),
-          ),
-        );
-      } else if (result.files.single.path!.split('.').last.toLowerCase() ==
-              'mp4' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'avi' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'mov' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'vmv' ||
-          result.files.single.path!.split('.').last.toLowerCase() == 'flv') {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VideoViewPage(
-                IconBackGroundColor: widget.recordIconBackGroundColor!,
-                path: result.files.single.path!,
-                onDataVideoReceived: widget.functionDataCameraReceived),
-          ),
-        );
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FileViewPage(
-              IconBackGroundColor: widget.recordIconBackGroundColor!,
-              path: result.files.single.path!,
-              onDataFileReceived: widget.functionDataCameraReceived,
-              audioExtensions: extension,
+      final filePath = result?.files.single.path;
+      final fileExtension = filePath?.split('.').last.toLowerCase();
+
+      print(
+          'File>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>. extension: $fileExtension');
+      if (result != null) {
+        if (result.files.single.path!.split('.').last.toLowerCase() == 'jpg' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'jpeg' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'png' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'gif' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'bmp') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CameraViewPage(
+                  IconBackGroundColor: widget.recordIconBackGroundColor!,
+                  path: result.files.single.path!,
+                  onDataCameraReceived: widget.functionDataCameraReceived),
             ),
-          ),
-        );
+          );
+        } else if (result.files.single.path!.split('.').last.toLowerCase() ==
+                'mp4' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'avi' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'mov' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'vmv' ||
+            result.files.single.path!.split('.').last.toLowerCase() == 'flv') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VideoViewPage(
+                  IconBackGroundColor: widget.recordIconBackGroundColor!,
+                  path: result.files.single.path!,
+                  onDataVideoReceived: widget.functionDataCameraReceived),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FileViewPage(
+                IconBackGroundColor: widget.recordIconBackGroundColor!,
+                path: result.files.single.path!,
+                onDataFileReceived: widget.functionDataCameraReceived,
+                audioExtensions: extension,
+              ),
+            ),
+          );
+        }
+      } else {
+        // User canceled the picker
       }
-    } else {
-      // User canceled the picker
-    }
+    } else {}
   }
 
   Widget iconCreation(

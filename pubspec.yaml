@@ -25,6 +25,7 @@ dependencies:
   camera: ^0.11.0+1
   video_player: ^2.8.7
   file_picker: 7.0.2
+  flutter_native_contact_picker: ^0.0.6
 
 
 
