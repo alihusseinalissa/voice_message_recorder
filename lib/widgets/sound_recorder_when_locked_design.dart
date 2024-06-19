@@ -47,7 +47,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
     return Padding(
       padding: Spacing.only(right: MM.x10),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.93,
+        width: MediaQuery.of(context).size.width * 0.97,
         height: fullRecordPackageHeight,
         decoration: BoxDecoration(
           border: soundRecordNotifier.isShow

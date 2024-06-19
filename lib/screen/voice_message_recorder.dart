@@ -99,7 +99,7 @@ class VoiceMessageRecorder extends StatefulWidget {
   final double fullRecordPackageHeight;
 
   final double initRecordPackageWidth;
-  final double? horizontalPadding;
+  final double? verticalPadding;
   // ignore: sort_constructors_first
   const VoiceMessageRecorder(
       {this.sendButtonIcon,
@@ -124,11 +124,11 @@ class VoiceMessageRecorder extends StatefulWidget {
       this.slideToCancelText = " Slide to Cancel >",
       this.cancelText = "Cancel",
       this.encode = AudioEncoderType.AAC,
-      this.cancelTextBackGroundColor,
+      this.cancelTextBackGroundColor = const Color(0xfffaefef),
       this.radius,
       Key? key,
       this.boarderRadius = 30,
-      this.horizontalPadding = 5,
+      this.verticalPadding = 5,
       required this.functionRecorderStatus,
       this.functionCameraPicker,
       this.functionFilePicker,
@@ -188,11 +188,8 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
         ],
         child: Consumer<SoundRecordNotifier>(
           builder: (context, value, _) {
-            return Padding(
-              padding: Spacing.symmetric(horizontal: widget.horizontalPadding!),
-              child: Directionality(
-                  textDirection: TextDirection.rtl, child: makeBody(value)),
-            );
+            return Directionality(
+                textDirection: TextDirection.rtl, child: makeBody(value));
           },
         ));
   }
@@ -207,164 +204,168 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
       widget.functionRecorderStatus(false);
     }
 
-    return Column(
-      children: [
-        Row(
-          children: [
-            Align(
-                alignment: Alignment.centerLeft,
-                child: message.text.isEmpty
-                    ? GestureDetector(
-                        onHorizontalDragUpdate: (scrollEnd) {
-                          state.updateScrollValue(
-                              scrollEnd.globalPosition, context);
-                        },
-                        onHorizontalDragEnd: (x) {
-                          if (state.buttonPressed && !state.isLocked)
-                            state.finishRecording();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(widget.boarderRadius!),
-                              topRight: Radius.circular(widget.boarderRadius!),
-                            ),
-                          ),
-                          child: recordVoice(state),
-                        ),
-                      )
-                    : Padding(
-                        padding: Spacing.only(left: MM.x12, right: MM.x10),
-                        child: InkWell(
-                          onTap: () {
-                            widget.functionSendTextMessage(message.text);
-                            message.clear();
-                            setState(() {});
+    return Padding(
+      padding: Spacing.symmetric(vertical: widget.verticalPadding!),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: message.text.isEmpty
+                      ? GestureDetector(
+                          onHorizontalDragUpdate: (scrollEnd) {
+                            state.updateScrollValue(
+                                scrollEnd.globalPosition, context);
                           },
-                          child: Transform.scale(
-                            scale: 1.2,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(MM.x600),
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn,
-                                width: MM.x45,
-                                height: MM.x45,
-                                child: Container(
-                                  color: widget.sendButtonBackgroundColor,
-                                  child: Padding(
-                                    padding: Spacing.all(MM.x4),
-                                    child: Icon(
-                                      Icons.send,
-                                      textDirection: TextDirection.ltr,
-                                      size: MM.x26,
-                                      color: Colors.white,
+                          onHorizontalDragEnd: (x) {
+                            if (state.buttonPressed && !state.isLocked)
+                              state.finishRecording();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(widget.boarderRadius!),
+                                topRight:
+                                    Radius.circular(widget.boarderRadius!),
+                              ),
+                            ),
+                            child: recordVoice(state),
+                          ),
+                        )
+                      : Padding(
+                          padding: Spacing.only(left: MM.x10, right: MM.x10),
+                          child: InkWell(
+                            onTap: () {
+                              widget.functionSendTextMessage(message.text);
+                              message.clear();
+                              setState(() {});
+                            },
+                            child: Transform.scale(
+                              scale: 1.2,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(MM.x600),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeIn,
+                                  width: MM.x45,
+                                  height: MM.x45,
+                                  child: Container(
+                                    color: widget.sendButtonBackgroundColor,
+                                    child: Padding(
+                                      padding: Spacing.all(MM.x4),
+                                      child: Icon(
+                                        Icons.send,
+                                        textDirection: TextDirection.ltr,
+                                        size: MM.x26,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      )),
-            if (!soundRecordNotifier.isShow)
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: message.text.length > 69
-                    ? MM.x110
-                    : message.text.length > 46
-                        ? MM.x100
-                        : message.text.length > 23
-                            ? MM.x80
-                            : widget.fullRecordPackageHeight,
-                padding: EdgeInsets.symmetric(
-                  horizontal: MM.x20 * 0.75,
-                ),
-                decoration: BoxDecoration(
-                  color: widget.backGroundColor,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(message.text.length > 23
-                      ? MM.x18
-                      : widget.boarderRadius!),
-                ),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (builder) => bottomSheet());
-                      },
-                      child: const Icon(
-                        Icons.attach_file,
-                        color: Colors.black,
-                      ),
-                    ),
-                    if (message.text.isEmpty) SizedBox(width: MM.x10),
-                    if (message.text.isEmpty)
+                        )),
+              if (!soundRecordNotifier.isShow)
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  height: message.text.length > 69
+                      ? MM.x110
+                      : message.text.length > 46
+                          ? MM.x100
+                          : message.text.length > 23
+                              ? MM.x80
+                              : widget.fullRecordPackageHeight,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MM.x20 * 0.75,
+                  ),
+                  decoration: BoxDecoration(
+                    color: widget.backGroundColor,
+                    border: Border.all(color: const Color(0xFFEFEFEF)),
+                    borderRadius: BorderRadius.circular(message.text.length > 23
+                        ? MM.x18
+                        : widget.boarderRadius!),
+                  ),
+                  child: Row(
+                    children: [
                       GestureDetector(
                         onTap: () {
-                          _checkPermissionAndOpenCamera();
+                          showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (builder) => bottomSheet());
                         },
                         child: const Icon(
-                          Icons.camera_alt_outlined,
+                          Icons.attach_file,
                           color: Colors.black,
                         ),
                       ),
-                    Expanded(
-                      child: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: TextField(
-                          textDirection: TextDirection.ltr,
-                          focusNode: textInputFocus,
-                          controller: message,
+                      if (message.text.isEmpty) SizedBox(width: MM.x10),
+                      if (message.text.isEmpty)
+                        GestureDetector(
                           onTap: () {
-                            show = false;
-                            setState(() {});
+                            _checkPermissionAndOpenCamera();
                           },
-                          onChanged: (val) {
-                            show = false;
-                            setState(() {});
-                          },
-                          maxLines: 3, // Limit to 3 lines
-                          decoration: InputDecoration(
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
+                          child: const Icon(
+                            Icons.camera_alt_outlined,
+                            color: Colors.black,
+                          ),
+                        ),
+                      Expanded(
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: TextField(
+                            textDirection: TextDirection.ltr,
+                            focusNode: textInputFocus,
+                            controller: message,
+                            onTap: () {
+                              show = false;
+                              setState(() {});
+                            },
+                            onChanged: (val) {
+                              show = false;
+                              setState(() {});
+                            },
+                            maxLines: 3, // Limit to 3 lines
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                              hintText: "Type message ...",
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                              border: InputBorder.none,
                             ),
-                            hintText: "Type message ...",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                            border: InputBorder.none,
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MM.x5,
-                    ),
-                    GestureDetector(
-                      child: Icon(
-                        show ? Icons.keyboard : Icons.emoji_emotions_outlined,
+                      SizedBox(
+                        width: MM.x5,
                       ),
-                      onTap: () {
-                        if (!show) {
-                          textInputFocus.unfocus();
-                          textInputFocus.canRequestFocus = false;
-                        }
-                        setState(() {
-                          show = !show;
-                        });
-                      },
-                    )
-                  ],
+                      GestureDetector(
+                        child: Icon(
+                          show ? Icons.keyboard : Icons.emoji_emotions_outlined,
+                        ),
+                        onTap: () {
+                          if (!show) {
+                            textInputFocus.unfocus();
+                            textInputFocus.canRequestFocus = false;
+                          }
+                          setState(() {
+                            show = !show;
+                          });
+                        },
+                      )
+                    ],
+                  ),
                 ),
-              ),
-          ],
-        ),
-        show ? emojiSelect() : Container(),
-      ],
+            ],
+          ),
+          show ? emojiSelect() : Container(),
+        ],
+      ),
     );
   }
 
@@ -435,7 +436,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
         duration: Duration(milliseconds: soundRecordNotifier.isShow ? 0 : 300),
         height: widget.fullRecordPackageHeight,
         width: (soundRecordNotifier.isShow)
-            ? MediaQuery.of(context).size.width * 0.95
+            ? MediaQuery.of(context).size.width * 0.99
             : widget.initRecordPackageWidth,
         child: Stack(
           children: [
@@ -730,6 +731,10 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: EmojiPicker(
+          onEmojiSelected: (category, emoji) {
+            show = false;
+            setState(() {});
+          },
           textEditingController: message,
           // scrollController: _scrollController,
           config: Config(

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -279,8 +280,15 @@ class SoundRecordNotifier extends ChangeNotifier {
   AudioPlayer audioPlayer = AudioPlayer();
   final player = AudioPlayer();
   Future<void> playSound(String path) async {
-    final bytes = await rootBundle.load(path);
-    await audioPlayer.play(BytesSource(bytes.buffer.asUint8List()));
+    try {
+      final bytes = await rootBundle.load(path);
+
+      await audioPlayer.play(BytesSource(bytes.buffer.asUint8List()));
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading audion on recording button: $e');
+      }
+    }
   }
 
   /// to check permission

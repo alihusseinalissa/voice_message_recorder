@@ -22,9 +22,9 @@ dependencies:
   record: ^4.4.4
   audioplayers: ^5.2.1
   emoji_picker_flutter: ^2.2.0
-  camera:
-  video_player:
-  file_picker:
+  camera: ^0.11.0+1
+  video_player: ^2.8.7
+  file_picker: 7.0.2
 
 
 
@@ -54,4 +54,5 @@ flutter:
 
   assets:
     - assets/
-
+    - assets/sounds/delete.mp3
+    - assets/sounds/record.mp3
