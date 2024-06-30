@@ -94,7 +94,7 @@ class CameraScreen extends StatelessWidget {
   final Color IconBackGroundColor;
   final Function(String) onDataVideoReceived;
   final Function(String) onDataCameraReceived;
-  CameraScreen(
+  const CameraScreen(
       {super.key,
       required this.IconBackGroundColor,
       required this.onDataCameraReceived,
@@ -116,7 +116,7 @@ class CameraScreenBody extends StatelessWidget {
   final Function(String) onDataVideoReceived;
   final Color IconBackGroundColor;
   final Function(String) onDataCameraReceived;
-  CameraScreenBody(
+  const CameraScreenBody(
       {super.key,
       required this.IconBackGroundColor,
       required this.onDataCameraReceived,
@@ -132,7 +132,7 @@ class CameraScreenBody extends StatelessWidget {
             future: cameraState.cameraValue,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Container(
+                return SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: CameraPreview(cameraState._cameraController),

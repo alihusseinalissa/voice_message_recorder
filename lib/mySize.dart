@@ -1021,12 +1021,12 @@ class MM {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
-    double _safeAreaWidth =
+    double safeAreaWidth =
         _mediaQueryData.padding.left + _mediaQueryData.padding.right;
-    double _safeAreaHeight =
+    double safeAreaHeight =
         _mediaQueryData.padding.top + _mediaQueryData.padding.bottom;
-    safeWidth = (screenWidth - _safeAreaWidth);
-    safeHeight = (screenHeight - _safeAreaHeight);
+    safeWidth = (screenWidth - safeAreaWidth);
+    safeHeight = (screenHeight - safeAreaHeight);
 
     scaleFactorHeight = (safeHeight / 820);
     if (scaleFactorHeight < 1) {

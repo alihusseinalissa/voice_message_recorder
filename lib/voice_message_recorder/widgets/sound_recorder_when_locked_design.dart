@@ -1,10 +1,10 @@
 library voice_message_recorder;
 
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
-import 'package:voice_message_recorder/widgets/show_counter.dart';
+import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/voice_message_recorder/widgets/show_counter.dart';
 
-import '../mySize.dart';
+import '../../mySize.dart';
 
 // ignore: must_be_immutable
 class SoundRecorderWhenLockedDesign extends StatelessWidget {

@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
             iconSize: 48.0,
-            icon: _isPlaying ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+            icon: _isPlaying ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
             color: widget.IconBackGroundColor,
           ),
           Slider(

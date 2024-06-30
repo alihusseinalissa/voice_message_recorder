@@ -1,9 +1,8 @@
 library voice_message_recorder;
 
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
-
-import '../mySize.dart';
+import 'package:voice_message_recorder/mySize.dart';
+import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
 
 /// Used this class to show counter and mic Icon
 class ShowCounter extends StatelessWidget {

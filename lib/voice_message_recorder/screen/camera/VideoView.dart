@@ -8,11 +8,10 @@ class VideoViewPage extends StatefulWidget {
   final Function(String) onDataVideoReceived;
   final Color IconBackGroundColor;
   const VideoViewPage(
-      {Key? key,
+      {super.key,
       required this.path,
       required this.IconBackGroundColor,
-      required this.onDataVideoReceived})
-      : super(key: key);
+      required this.onDataVideoReceived});
   final String path;
 
   @override
@@ -46,7 +45,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
               ),
               onPressed: () {}),
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.emoji_emotions_outlined,
                 size: 27,
               ),
@@ -65,12 +64,12 @@ class _VideoViewPageState extends State<VideoViewPage> {
               onPressed: () {}),
         ],
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 150,
               child: _controller.value.isInitialized

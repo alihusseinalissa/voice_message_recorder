@@ -6,12 +6,11 @@ import 'package:voice_message_recorder/mySize.dart';
 class CameraViewPage extends StatelessWidget {
   final Function(String) onDataCameraReceived;
   final Color IconBackGroundColor;
-  CameraViewPage(
-      {Key? key,
+  const CameraViewPage(
+      {super.key,
       required this.path,
       required this.IconBackGroundColor,
-      required this.onDataCameraReceived})
-      : super(key: key);
+      required this.onDataCameraReceived});
   final String path;
 
   @override
@@ -47,12 +46,12 @@ class CameraViewPage extends StatelessWidget {
               onPressed: () {}),
         ],
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 150,
               child: Image.file(

@@ -2,9 +2,9 @@ library voice_message_recorder;
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
 
-import '../mySize.dart';
+import '../../mySize.dart';
 
 /// used to show mic and show dragg text when
 /// press into record icon

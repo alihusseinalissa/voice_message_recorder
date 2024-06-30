@@ -7,13 +7,12 @@ class FileViewPage extends StatefulWidget {
   final Function(String) onDataFileReceived;
   final List<String> audioExtensions;
   final Color IconBackGroundColor;
-  FileViewPage(
-      {Key? key,
+  const FileViewPage(
+      {super.key,
       required this.path,
       required this.IconBackGroundColor,
       required this.onDataFileReceived,
-      required this.audioExtensions})
-      : super(key: key);
+      required this.audioExtensions});
   final String path;
 
   @override
@@ -86,10 +85,10 @@ class _FileViewPageState extends State<FileViewPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: widget.IconBackGroundColor,
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -98,7 +97,7 @@ class _FileViewPageState extends State<FileViewPage> {
             SizedBox(
               height: MM.x50,
             ),
-            Container(
+            SizedBox(
               height: MM.x200,
               child: widget.audioExtensions.contains(extension)
                   ? Column(
@@ -108,7 +107,7 @@ class _FileViewPageState extends State<FileViewPage> {
                         getFileIcon(size: MM.x100),
                         Text(
                           widget.path.split('/').last,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         )
                       ],
                     )

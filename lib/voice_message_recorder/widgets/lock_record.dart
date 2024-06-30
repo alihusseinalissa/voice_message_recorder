@@ -1,9 +1,9 @@
 library voice_message_recorder;
 
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
 
-import '../mySize.dart';
+import '../../mySize.dart';
 
 /// This Class Represent Icons To swap top to lock recording
 class LockRecord extends StatefulWidget {
@@ -15,8 +15,8 @@ class LockRecord extends StatefulWidget {
   const LockRecord({
     this.lockIcon,
     required this.soundRecorderState,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   _LockRecordState createState() => _LockRecordState();
 }

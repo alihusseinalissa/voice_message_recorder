@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
-import 'package:voice_message_recorder/widgets/lock_record.dart';
-import 'package:voice_message_recorder/widgets/show_counter.dart';
-import 'package:voice_message_recorder/widgets/show_mic_with_text.dart';
-import 'package:voice_message_recorder/widgets/sound_recorder_when_locked_design.dart';
+import 'package:voice_message_recorder/mySize.dart';
+import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/voice_message_recorder/widgets/lock_record.dart';
+import 'package:voice_message_recorder/voice_message_recorder/widgets/show_counter.dart';
+import 'package:voice_message_recorder/voice_message_recorder/widgets/show_mic_with_text.dart';
+import 'package:voice_message_recorder/voice_message_recorder/widgets/sound_recorder_when_locked_design.dart';
 
 import '../audio_encoder_type.dart';
-import '../mySize.dart';
 import 'camera/CameraView.dart';
 import 'camera/VideoView.dart';
 import 'camera/camera.dart';
@@ -129,7 +129,7 @@ class VoiceMessageRecorder extends StatefulWidget {
     this.encode = AudioEncoderType.AAC,
     this.cancelTextBackGroundColor = const Color(0xfffaefef),
     this.radius,
-    Key? key,
+    super.key,
     this.boarderRadius = 30,
     this.verticalPadding = 5,
     required this.functionRecorderStatus,
@@ -138,7 +138,7 @@ class VoiceMessageRecorder extends StatefulWidget {
     this.functionEmogiPicker,
     required this.functionSendTextMessage,
     required this.functionDataCameraReceived,
-  }) : super(key: key);
+  });
 
   @override
   _VoiceMessageRecorder createState() => _VoiceMessageRecorder();
@@ -146,7 +146,7 @@ class VoiceMessageRecorder extends StatefulWidget {
 
 class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   late SoundRecordNotifier soundRecordNotifier;
-  final FlutterContactPicker _contactPicker = new FlutterContactPicker();
+  final FlutterContactPicker _contactPicker = FlutterContactPicker();
   List<Contact>? _contacts;
   @override
   void initState() {
@@ -224,8 +224,9 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                                 scrollEnd.globalPosition, context);
                           },
                           onHorizontalDragEnd: (x) {
-                            if (state.buttonPressed && !state.isLocked)
+                            if (state.buttonPressed && !state.isLocked) {
                               state.finishRecording();
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -344,7 +345,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                                 color: Colors.grey,
                               ),
                               hintText: "Type message ...",
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 color: Colors.grey,
                               ),
                               border: InputBorder.none,
@@ -524,7 +525,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   }
 
   Widget bottomSheet() {
-    return Container(
+    return SizedBox(
       height: 278,
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -734,12 +735,12 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
               color: Colors.white,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               // fontWeight: FontWeight.w100,
             ),

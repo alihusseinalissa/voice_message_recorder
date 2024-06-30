@@ -29,7 +29,7 @@ class MK {
   static const Color grey = Color(0xFF868686);
   static const Color white = Color(0xFFFFFFFF);
   static const Color offWhite = Color(0xFFF5F5F5);
-  static Color dotColor = Color(0xffd50707);
-  static Color Sub_dotColor = Color(0xff520be1);
-  static Color Sub_dotColor2 = Color(0xff0693f6);
+  static Color dotColor = const Color(0xffd50707);
+  static Color Sub_dotColor = const Color(0xff520be1);
+  static Color Sub_dotColor2 = const Color(0xff0693f6);
 }
