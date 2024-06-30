@@ -29,7 +29,9 @@ dependencies:
   json_annotation: ^4.8.1
   flutter_multi_formatter: ^2.12.4
   country_flags: ^2.2.0
-
+  flutter_cache_manager: ^3.3.1
+  just_audio: ^0.9.37
+  syncfusion_flutter_sliders: ^25.1.41
 
 
 dev_dependencies:
