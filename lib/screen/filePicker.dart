@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/mySize.dart';
 
+import '../../recorderSize.dart';
 import 'audio/player.dart';
 
 class FileViewPage extends StatefulWidget {
@@ -95,16 +95,16 @@ class _FileViewPageState extends State<FileViewPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              height: MM.x50,
+              height: RecorderSize.x50,
             ),
             SizedBox(
-              height: MM.x200,
+              height: RecorderSize.x200,
               child: widget.audioExtensions.contains(extension)
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        getFileIcon(size: MM.x100),
+                        getFileIcon(size: RecorderSize.x100),
                         Text(
                           widget.path.split('/').last,
                           style: const TextStyle(color: Colors.white),
@@ -119,11 +119,12 @@ class _FileViewPageState extends State<FileViewPage> {
             Container(
               color: Colors.black38,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(vertical: MM.x5, horizontal: MM.x8),
+              padding: EdgeInsets.symmetric(
+                  vertical: RecorderSize.x5, horizontal: RecorderSize.x8),
               child: TextFormField(
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: MM.x17,
+                  fontSize: RecorderSize.x17,
                 ),
                 maxLines: 6,
                 minLines: 1,
@@ -133,11 +134,11 @@ class _FileViewPageState extends State<FileViewPage> {
                     prefixIcon: Icon(
                       Icons.add_photo_alternate,
                       color: Colors.white,
-                      size: MM.x27,
+                      size: RecorderSize.x27,
                     ),
                     hintStyle: TextStyle(
                       color: Colors.white,
-                      fontSize: MM.x17,
+                      fontSize: RecorderSize.x17,
                     ),
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -145,12 +146,12 @@ class _FileViewPageState extends State<FileViewPage> {
                         Navigator.of(context).pop();
                       },
                       child: CircleAvatar(
-                        radius: MM.x27,
+                        radius: RecorderSize.x27,
                         backgroundColor: widget.IconBackGroundColor,
                         child: Icon(
                           Icons.check,
                           color: Colors.white,
-                          size: MM.x27,
+                          size: RecorderSize.x27,
                         ),
                       ),
                     )),

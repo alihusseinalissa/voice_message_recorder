@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:voice_message_recorder/mySize.dart';
-import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
-import 'package:voice_message_recorder/voice_message_recorder/widgets/lock_record.dart';
-import 'package:voice_message_recorder/voice_message_recorder/widgets/show_counter.dart';
-import 'package:voice_message_recorder/voice_message_recorder/widgets/show_mic_with_text.dart';
-import 'package:voice_message_recorder/voice_message_recorder/widgets/sound_recorder_when_locked_design.dart';
+import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/widgets/lock_record.dart';
+import 'package:voice_message_recorder/widgets/show_counter.dart';
+import 'package:voice_message_recorder/widgets/show_mic_with_text.dart';
+import 'package:voice_message_recorder/widgets/sound_recorder_when_locked_design.dart';
 
 import '../audio_encoder_type.dart';
+import '../recorderSize.dart';
 import 'camera/CameraView.dart';
 import 'camera/VideoView.dart';
 import 'camera/camera.dart';
@@ -179,7 +179,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   bool show = false;
   @override
   Widget build(BuildContext context) {
-    MM().init(context);
+    RecorderSize().init(context);
     soundRecordNotifier.maxRecordTime = widget.maxRecordTimeInSecond;
     soundRecordNotifier.startRecording = widget.functionStartRecording ?? () {};
     soundRecordNotifier.stopRecording =
@@ -240,7 +240,8 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                           ),
                         )
                       : Padding(
-                          padding: Spacing.only(left: MM.x10, right: MM.x10),
+                          padding: Spacing.only(
+                              left: RecorderSize.x10, right: RecorderSize.x10),
                           child: InkWell(
                             onTap: () {
                               widget.functionSendTextMessage(message.text);
@@ -250,20 +251,21 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                             child: Transform.scale(
                               scale: 1.2,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(MM.x600),
+                                borderRadius:
+                                    BorderRadius.circular(RecorderSize.x600),
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.easeIn,
-                                  width: MM.x42,
-                                  height: MM.x42,
+                                  width: RecorderSize.x42,
+                                  height: RecorderSize.x42,
                                   child: Container(
                                     color: widget.sendButtonBackgroundColor,
                                     child: Padding(
-                                      padding: Spacing.all(MM.x4),
+                                      padding: Spacing.all(RecorderSize.x4),
                                       child: Icon(
                                         Icons.send,
                                         textDirection: TextDirection.ltr,
-                                        size: MM.x26,
+                                        size: RecorderSize.x26,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -277,22 +279,22 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   height: message.text.length > 90
-                      ? MM.x130
+                      ? RecorderSize.x130
                       : message.text.length > 69
-                          ? MM.x110
+                          ? RecorderSize.x110
                           : message.text.length > 48
-                              ? MM.x100
+                              ? RecorderSize.x100
                               : message.text.length > 23
-                                  ? MM.x80
+                                  ? RecorderSize.x80
                                   : widget.fullRecordPackageHeight,
                   padding: EdgeInsets.symmetric(
-                    horizontal: MM.x20 * 0.50,
+                    horizontal: RecorderSize.x20 * 0.50,
                   ),
                   decoration: BoxDecoration(
                     color: widget.textFieldBackGroundColor,
                     border: Border.all(color: const Color(0xFFEFEFEF)),
                     borderRadius: BorderRadius.circular(message.text.length > 23
-                        ? MM.x18
+                        ? RecorderSize.x18
                         : widget.boarderRadius!),
                   ),
                   child: Row(
@@ -310,7 +312,8 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                           color: Colors.black,
                         ),
                       ),
-                      if (message.text.isEmpty) SizedBox(width: MM.x10),
+                      if (message.text.isEmpty)
+                        SizedBox(width: RecorderSize.x10),
                       if (message.text.isEmpty)
                         GestureDetector(
                           onTap: () {
@@ -339,8 +342,10 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                             maxLines: 4, // Limit to 3 lines
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
-                                  top: message.text.isEmpty ? MM.x12 : MM.x1,
-                                  bottom: MM.x1),
+                                  top: message.text.isEmpty
+                                      ? RecorderSize.x12
+                                      : RecorderSize.x1,
+                                  bottom: RecorderSize.x1),
                               hintStyle: const TextStyle(
                                 color: Colors.grey,
                               ),
@@ -354,7 +359,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                         ),
                       ),
                       SizedBox(
-                        width: MM.x3,
+                        width: RecorderSize.x3,
                       ),
                       GestureDetector(
                         child: Icon(
@@ -512,7 +517,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
               ),
             ),
             SizedBox(
-              width: MM.x70,
+              width: RecorderSize.x70,
               child: LockRecord(
                 soundRecorderState: state,
                 lockIcon: widget.lockButton,
@@ -532,7 +537,8 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
         margin: const EdgeInsets.all(18.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: MM.x10, vertical: MM.x20),
+          padding: EdgeInsets.symmetric(
+              horizontal: RecorderSize.x10, vertical: RecorderSize.x20),
           child: Column(
             children: [
               Row(
@@ -567,7 +573,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                         ]);
                       }),
                   SizedBox(
-                    width: MM.x40,
+                    width: RecorderSize.x40,
                   ),
                   iconCreation(
                       icons: Icons.video_collection_outlined,
@@ -583,7 +589,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                         ]);
                       }),
                   SizedBox(
-                    width: MM.x40,
+                    width: RecorderSize.x40,
                   ),
                   iconCreation(
                       icons: Icons.insert_photo,
@@ -601,7 +607,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                 ],
               ),
               SizedBox(
-                height: MM.x30,
+                height: RecorderSize.x30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -623,7 +629,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                         ]);
                       }),
                   SizedBox(
-                    width: MM.x40,
+                    width: RecorderSize.x40,
                   ),
                   iconCreation(
                       icons: Icons.location_pin,
@@ -631,7 +637,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
                       text: "Location",
                       onTap: () {}),
                   SizedBox(
-                    width: MM.x40,
+                    width: RecorderSize.x40,
                   ),
                   iconCreation(
                       icons: Icons.person,
@@ -761,7 +767,7 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
           textEditingController: message,
           // scrollController: _scrollController,
           config: Config(
-            height: MM.x250,
+            height: RecorderSize.x250,
             checkPlatformCompatibility: true,
             emojiViewConfig: const EmojiViewConfig(
                 // Issue: https://github.com/flutter/flutter/issues/28894

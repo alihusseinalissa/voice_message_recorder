@@ -1,17 +1,36 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/mySize.dart';
+import 'package:video_player/video_player.dart';
 
-class CameraViewPage extends StatelessWidget {
-  final Function(String) onDataCameraReceived;
+import '../../recorderSize.dart';
+
+class VideoViewPage extends StatefulWidget {
+  final Function(String) onDataVideoReceived;
   final Color IconBackGroundColor;
-  const CameraViewPage(
+  const VideoViewPage(
       {super.key,
       required this.path,
       required this.IconBackGroundColor,
-      required this.onDataCameraReceived});
+      required this.onDataVideoReceived});
   final String path;
+
+  @override
+  _VideoViewPageState createState() => _VideoViewPageState();
+}
+
+class _VideoViewPageState extends State<VideoViewPage> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.file(File(widget.path))
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +42,25 @@ class CameraViewPage extends StatelessWidget {
           IconButton(
               icon: Icon(
                 Icons.crop_rotate,
-                size: MM.x27,
+                size: RecorderSize.x27,
               ),
               onPressed: () {}),
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.emoji_emotions_outlined,
-                size: MM.x27,
+                size: 27,
               ),
               onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.title,
-                size: MM.x27,
+                size: RecorderSize.x27,
               ),
               onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.edit,
-                size: MM.x27,
+                size: RecorderSize.x27,
               ),
               onPressed: () {}),
         ],
@@ -54,22 +73,24 @@ class CameraViewPage extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 150,
-              child: Image.file(
-                File(path),
-                fit: BoxFit.cover,
-              ),
+              child: _controller.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                  : Container(),
             ),
             Positioned(
               bottom: 0,
               child: Container(
                 color: Colors.black38,
                 width: MediaQuery.of(context).size.width,
-                padding:
-                    EdgeInsets.symmetric(vertical: MM.x5, horizontal: MM.x8),
+                padding: EdgeInsets.symmetric(
+                    vertical: RecorderSize.x5, horizontal: RecorderSize.x8),
                 child: TextFormField(
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MM.x17,
+                    fontSize: RecorderSize.x17,
                   ),
                   maxLines: 6,
                   minLines: 1,
@@ -79,28 +100,51 @@ class CameraViewPage extends StatelessWidget {
                       prefixIcon: Icon(
                         Icons.add_photo_alternate,
                         color: Colors.white,
-                        size: MM.x27,
+                        size: RecorderSize.x27,
                       ),
                       hintStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: MM.x17,
+                        fontSize: RecorderSize.x17,
                       ),
                       suffixIcon: GestureDetector(
                         onTap: () {
-                          onDataCameraReceived(path);
+                          widget.onDataVideoReceived(widget.path);
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                         },
                         child: CircleAvatar(
-                          radius: MM.x27,
-                          backgroundColor: IconBackGroundColor,
+                          radius: RecorderSize.x27,
+                          backgroundColor: widget.IconBackGroundColor,
                           child: Icon(
                             Icons.check,
                             color: Colors.white,
-                            size: MM.x27,
+                            size: RecorderSize.x27,
                           ),
                         ),
                       )),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
+                  });
+                },
+                child: CircleAvatar(
+                  radius: RecorderSize.x33,
+                  backgroundColor: Colors.black38,
+                  child: Icon(
+                    _controller.value.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                    color: Colors.white,
+                    size: RecorderSize.x50,
+                  ),
                 ),
               ),
             ),

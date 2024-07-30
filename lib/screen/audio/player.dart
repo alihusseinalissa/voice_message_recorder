@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/mySize.dart';
+
+import '../../recorderSize.dart';
 
 class MyHomePage extends StatefulWidget {
   final Color IconBackGroundColor;
@@ -62,7 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
             iconSize: 48.0,
-            icon: _isPlaying ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
+            icon: _isPlaying
+                ? const Icon(Icons.pause)
+                : const Icon(Icons.play_arrow),
             color: widget.IconBackGroundColor,
           ),
           Slider(
@@ -88,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 : _duration != null
                     ? _durationText
                     : '',
-            style: TextStyle(fontSize: MM.x16, color: Colors.white),
+            style: TextStyle(fontSize: RecorderSize.x16, color: Colors.white),
           ),
         ],
       ),

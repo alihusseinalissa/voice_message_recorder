@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MM {
+class RecorderSize {
   static late MediaQueryData _mediaQueryData;
   static late double screenWidth;
   static late double screenHeight;
@@ -2067,10 +2067,10 @@ class Spacing {
       bool withResponsive = true}) {
     if (withResponsive) {
       return EdgeInsets.only(
-          left: MM.getScaledSizeHeight(left),
-          right: MM.getScaledSizeHeight(right),
-          top: MM.getScaledSizeHeight(top),
-          bottom: MM.getScaledSizeHeight(bottom));
+          left: RecorderSize.getScaledSizeHeight(left),
+          right: RecorderSize.getScaledSizeHeight(right),
+          top: RecorderSize.getScaledSizeHeight(top),
+          bottom: RecorderSize.getScaledSizeHeight(bottom));
     } else {
       return EdgeInsets.only(
           left: left, right: right, top: top, bottom: bottom);

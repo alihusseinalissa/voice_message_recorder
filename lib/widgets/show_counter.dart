@@ -1,8 +1,9 @@
 library voice_message_recorder;
 
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/mySize.dart';
-import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
+
+import '../recorderSize.dart';
 
 /// Used this class to show counter and mic Icon
 class ShowCounter extends StatelessWidget {
@@ -26,16 +27,16 @@ class ShowCounter extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: counterBackGroundColor ?? const Color(0xfff5f4f4),
-            borderRadius: BorderRadius.all(Radius.circular(MM.x30))),
+            borderRadius: BorderRadius.all(Radius.circular(RecorderSize.x30))),
         height: fullRecordPackageHeight * 0.98,
         width: MediaQuery.of(context).size.width * 0.4,
         child: Padding(
-          padding: Spacing.only(top: MM.x6),
+          padding: Spacing.only(top: RecorderSize.x6),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(width: MM.x30),
+              SizedBox(width: RecorderSize.x30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +46,7 @@ class ShowCounter extends StatelessWidget {
                     style: counterTextStyle ??
                         const TextStyle(color: Colors.black),
                   ),
-                  SizedBox(width: MM.x3),
+                  SizedBox(width: RecorderSize.x3),
                   const Text(" : "),
                   Text(
                     soundRecorderState.minute.toString().padLeft(2, '0'),
@@ -54,7 +55,7 @@ class ShowCounter extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: MM.x3),
+              SizedBox(width: RecorderSize.x3),
               AnimatedOpacity(
                 duration: const Duration(seconds: 1),
                 opacity: soundRecorderState.second % 2 == 0 ? 1 : 0,
@@ -63,7 +64,7 @@ class ShowCounter extends StatelessWidget {
                   color: Colors.red,
                 ),
               ),
-              SizedBox(width: MM.x10),
+              SizedBox(width: RecorderSize.x10),
             ],
           ),
         ),

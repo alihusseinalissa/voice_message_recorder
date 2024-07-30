@@ -1,10 +1,10 @@
 library voice_message_recorder;
 
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
-import 'package:voice_message_recorder/voice_message_recorder/widgets/show_counter.dart';
+import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/widgets/show_counter.dart';
 
-import '../../mySize.dart';
+import '../../recorderSize.dart';
 
 // ignore: must_be_immutable
 class SoundRecorderWhenLockedDesign extends StatelessWidget {
@@ -45,7 +45,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: Spacing.only(right: MM.x10),
+      padding: Spacing.only(right: RecorderSize.x10),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.97,
         height: fullRecordPackageHeight,
@@ -80,7 +80,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                 child: Transform.scale(
                   scale: 1.2,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(MM.x600),
+                    borderRadius: BorderRadius.circular(RecorderSize.x600),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeIn,
@@ -89,13 +89,13 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                       child: Container(
                         color: sendButtonBackgroundColor,
                         child: Padding(
-                          padding: Spacing.all(MM.x4),
+                          padding: Spacing.all(RecorderSize.x4),
                           child: recordIconWhenLockedRecord ??
                               sendButtonIcon ??
                               Icon(
                                 Icons.send,
                                 textDirection: TextDirection.ltr,
-                                size: MM.x26,
+                                size: RecorderSize.x26,
                                 color: (soundRecordNotifier.buttonPressed)
                                     ? Colors.grey.shade200
                                     : Colors.black,
@@ -116,7 +116,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                       soundRecordNotifier.resetEdgePadding();
                     },
                     child: Padding(
-                      padding: Spacing.all(MM.x8),
+                      padding: Spacing.all(RecorderSize.x8),
                       child: Text(
                         cancelText ?? "",
                         maxLines: 1,

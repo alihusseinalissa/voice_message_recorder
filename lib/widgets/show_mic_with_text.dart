@@ -2,9 +2,9 @@ library voice_message_recorder;
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:voice_message_recorder/voice_message_recorder/provider/sound_record_notifier.dart';
+import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
 
-import '../../mySize.dart';
+import '../../recorderSize.dart';
 
 /// used to show mic and show dragg text when
 /// press into record icon
@@ -38,7 +38,7 @@ class ShowMicWithText extends StatelessWidget {
     Colors.black,
   ];
   final colorizeTextStyle = TextStyle(
-    fontSize: MM.x14,
+    fontSize: RecorderSize.x14,
     fontFamily: 'Horizon',
   );
   @override
@@ -56,7 +56,7 @@ class ShowMicWithText extends StatelessWidget {
               key: soundRecorderState.key,
               scale: soundRecorderState.buttonPressed ? 1.3 : 1,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(MM.x600),
+                borderRadius: BorderRadius.circular(RecorderSize.x600),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeIn,
@@ -67,11 +67,11 @@ class ShowMicWithText extends StatelessWidget {
                   child: Container(
                     color: recordButtonBackGroundColor,
                     child: Padding(
-                      padding: Spacing.all(MM.x2),
+                      padding: Spacing.all(RecorderSize.x2),
                       child: recordIcon ??
                           Icon(
                             Icons.mic_none,
-                            size: MM.x28,
+                            size: RecorderSize.x28,
                             color: (soundRecorderState.buttonPressed)
                                 ? Colors.white70
                                 : Colors.white,
@@ -86,12 +86,13 @@ class ShowMicWithText extends StatelessWidget {
         if (shouldShowText)
           Expanded(
             child: Padding(
-              padding: Spacing.only(left: MM.x8, right: MM.x8),
+              padding:
+                  Spacing.only(left: RecorderSize.x8, right: RecorderSize.x8),
               child: DefaultTextStyle(
                 overflow: TextOverflow.clip,
                 maxLines: 1,
                 style: TextStyle(
-                  fontSize: MM.x15,
+                  fontSize: RecorderSize.x15,
                 ),
                 child: AnimatedTextKit(
                   animatedTexts: [

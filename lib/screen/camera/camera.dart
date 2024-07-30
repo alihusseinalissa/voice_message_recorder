@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:voice_message_recorder/mySize.dart';
 
+import '../../recorderSize.dart';
 import 'CameraView.dart';
 import 'VideoView.dart';
 
@@ -148,7 +148,8 @@ class CameraScreenBody extends StatelessWidget {
             bottom: 0.0,
             child: Container(
               color: Colors.black,
-              padding: EdgeInsets.only(top: MM.x5, bottom: MM.x5),
+              padding: EdgeInsets.only(
+                  top: RecorderSize.x5, bottom: RecorderSize.x5),
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
@@ -160,7 +161,7 @@ class CameraScreenBody extends StatelessWidget {
                         icon: Icon(
                           cameraState.flash ? Icons.flash_on : Icons.flash_off,
                           color: Colors.white,
-                          size: MM.x28,
+                          size: RecorderSize.x28,
                         ),
                         onPressed: () => cameraState.toggleFlash(),
                       ),
@@ -176,12 +177,12 @@ class CameraScreenBody extends StatelessWidget {
                             ? Icon(
                                 Icons.radio_button_on,
                                 color: Colors.red,
-                                size: MM.x80,
+                                size: RecorderSize.x80,
                               )
                             : Icon(
                                 Icons.panorama_fish_eye,
                                 color: Colors.white,
-                                size: MM.x70,
+                                size: RecorderSize.x70,
                               ),
                       ),
                       IconButton(
@@ -190,7 +191,7 @@ class CameraScreenBody extends StatelessWidget {
                           child: Icon(
                             Icons.flip_camera_ios,
                             color: Colors.white,
-                            size: MM.x28,
+                            size: RecorderSize.x28,
                           ),
                         ),
                         onPressed: () => cameraState.switchCamera(),
@@ -198,7 +199,7 @@ class CameraScreenBody extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: MM.x4,
+                    height: RecorderSize.x4,
                   ),
                   const Text(
                     "Hold for Video, tap for photo",
