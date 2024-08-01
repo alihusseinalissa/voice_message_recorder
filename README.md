@@ -10,9 +10,8 @@
 
 ## Demo
 
+![Alt text](voice_recorder.gif)
 <div style="height:24px;"></div>
-
-![](voice_message_recorder.gif)
 ### Android
 ```xml
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
