@@ -10,7 +10,8 @@
 
 ## Demo
 
-![Alt text](https://raw.githubusercontent.com/Moeed366/voice_message_recorder/main/voice_recorder.gif)
+![Alt text](https://github.com/user-attachments/assets/5218e3ac-6e7f-4f29-906e-255750b1c858)
+
 <div style="height:24px;"></div>
 ### Android
 ```xml
