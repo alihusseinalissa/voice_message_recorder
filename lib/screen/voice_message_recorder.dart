@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_message_recorder/provider/sound_record_notifier.dart';
@@ -146,7 +147,7 @@ class VoiceMessageRecorder extends StatefulWidget {
 
 class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
   late SoundRecordNotifier soundRecordNotifier;
-  final FlutterContactPicker _contactPicker = FlutterContactPicker();
+  final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
   List<Contact>? _contacts;
   @override
   void initState() {
@@ -777,7 +778,6 @@ class _VoiceMessageRecorder extends State<VoiceMessageRecorder> {
           ? 1.2
           : 1.0),*/
                 ),
-            swapCategoryAndBottomBar: false,
             skinToneConfig: SkinToneConfig(
                 indicatorColor: widget.recordIconBackGroundColor!),
             categoryViewConfig: CategoryViewConfig(
